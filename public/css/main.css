@@ -65,3 +65,20 @@ body {
         }
     }
 }
+.faculty-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.faculty-card,
+.faculty-detail {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.faculty-card h2 {
+    margin-top: 0;
+}
