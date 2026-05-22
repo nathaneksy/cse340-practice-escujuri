@@ -8,7 +8,19 @@ import {
     facultyDetailPage
 } from "./faculty/faculty.js";
 
+
+
 const router = Router();
+
+// Add catalog-specific styles to all catalog routes
+router.use('/catalog', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/catalog.css">');
+    next();
+});
+router.use('/faculty', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/main.css">');
+    next();
+});
 
 // Home and basic pages
 router.get('/', homePage);
@@ -16,11 +28,16 @@ router.get('/about', aboutPage);
 
 // Course catalog routes
 router.get('/catalog', catalogPage);
-router.get('/catalog/:courseId', courseDetailPage);
+router.get('/catalog/:slugId', courseDetailPage);
 
+
+router.get('/faculty-test', (req, res) => {
+    console.log('FACULTY TEST ROUTE HIT');
+    res.send('Faculty test route works');
+});
 // Faculty routes
 router.get('/faculty', facultyListPage);
-router.get('/faculty/:facultyId', facultyDetailPage);
+router.get('/faculty/:facultySlug', facultyDetailPage);
 
 // Demo page with special middleware
 router.get('/demo', addDemoHeaders, demoPage);
