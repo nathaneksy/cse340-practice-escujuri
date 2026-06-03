@@ -57,6 +57,12 @@ const addLocalVariables = (req, res, next) => {
 
     res.locals.greeting = `<p>${getCurrentGreeting()}</p>`;
 
+        // Convenience variable for UI state based on session state
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
+
     const themes = ['blue-theme', 'green-theme', 'red-theme'];
     const randomTheme = themes[Math.floor(Math.random() * themes.length)];
     res.locals.bodyClass = randomTheme;
