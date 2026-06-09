@@ -6,6 +6,7 @@ import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
 import { caCert } from './src/models/db.js';
 import { startSessionCleanup } from './src/utils/session-cleanup.js';
+import flash from './src/middleware/flash.js';
 
 // Import MVC components
 import routes from './src/controllers/routes.js';
@@ -70,6 +71,12 @@ app.use(addLocalVariables);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Global middleware (sets res.locals variables)
+app.use(addLocalVariables);
+
+// Flash message middleware (must come after session and global middleware)
+app.use(flash);
+
 /**
  * Routes
  */
@@ -92,6 +99,8 @@ app.use((err, req, res, next) => {
     if (res.headersSent || res.finished) {
         return next(err);
     }
+
+    
 
     // Determine status and template
     const status = err.status || 500;
